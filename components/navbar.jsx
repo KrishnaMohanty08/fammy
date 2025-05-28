@@ -1,5 +1,4 @@
 import React from 'react';
-import 'K:/GitHub/Canteen-Ordering-System/CustomerPage/src/App.css'
 import { Roboto, Geist, Comic_Neue } from "next/font/google";
 import Link from 'next/link';
 
