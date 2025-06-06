@@ -80,7 +80,6 @@ export default  function Home() {
       ) : (
         <div>
 
-
           {/* Cards Section */}
           <div className="flex flex-wrap gap-6 justify-center m-4 ml-39 mt-20">
             {posts.slice(Math.random()*15, Math.random() * 50).map((post) => (
