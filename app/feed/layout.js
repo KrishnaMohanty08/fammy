@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Footer from '@/components/footer'
+import Script from 'next/script' // Add this import
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en">
       <body
@@ -26,9 +26,11 @@ export default function RootLayout({ children }) {
       >
         {children}
         <Footer/>
-        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+        <Script 
+          src="https://cdn.lordicon.com/lordicon.js" 
+          strategy="beforeInteractive" 
+        />
       </body>
     </html>
-    
   );
 }
