@@ -1,9 +1,9 @@
 'use client';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Navbar from '../../components/navbar';
+import Navbar from '@/components/navbar';
 import { Comic_Neue, Geist } from 'next/font/google';
-import Country from '../../components/country.jsx'
+import Country from '@/components/country.jsx'
 import { useSession, signIn, signOut } from "next-auth/react"
 
 
@@ -39,9 +39,7 @@ export default function Page() {
         <Navbar />
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)}
-          className={` mt-22 backdrop-blur-lg rounded-xl max-w-md mx-auto mt-10 border  shadow-4xl w-90`}
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className={` mt-22 backdrop-blur-lg rounded-xl max-w-md mx-auto mt-10 border  shadow-4xl w-90`}>
           {/* Lordicon Icon */}
           <div className="flex justify-center ">
             <lord-icon

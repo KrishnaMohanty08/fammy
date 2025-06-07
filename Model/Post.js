@@ -6,8 +6,8 @@ const postSchema=new mongoose.Schema({
       body: String,
       tags: [ String ],
       reactions: {
-        likes: {type:Number,default:0},
-        dislikes: {type:Number,default:0},
+        likes: {type:Number},
+        dislikes: {type:Number},
       },
       views: Number,
       userId: Number,

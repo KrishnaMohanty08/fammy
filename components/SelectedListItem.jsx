@@ -3,14 +3,14 @@ import {Button,Box,List,ListItemButton,ListItemIcon,ListItemText} from '@mui/mat
 import Divider from '@mui/material/Divider';
 import { signOut } from 'next-auth/react';
 
-export default function SelectedListItem() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+export default function SelectedListItem({selectedIndex,setSelectedIndex}) {
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
 
   return (
+    <div className='absolute fixed left-0 top-13 h-screen bg-black z-40 text-white p-2'>
     <Box sx={{ width: '100%', maxWidth: 350, bgcolor: 'background.gray-300' }}>
       <List component="nav" aria-label="main mailbox folders" >
         <ListItemButton
@@ -36,12 +36,6 @@ export default function SelectedListItem() {
           selected={selectedIndex === 2}
           onClick={(event) => handleListItemClick(event, 2)}
         >
-          <ListItemText primary="Trash" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 3}
-          onClick={(event) => handleListItemClick(event, 3)}
-        >
           <ListItemText primary="Spam" />
         </ListItemButton>
 
@@ -54,5 +48,6 @@ export default function SelectedListItem() {
         Sign Out
       </Button>
     </Box>
+    </div>
   );
 }

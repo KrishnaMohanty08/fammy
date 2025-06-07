@@ -19,12 +19,12 @@ body {
 }
 
 .containers {
-  background: rgb(62, 62, 62);
+  background: rgb(64, 84, 105);
   border-radius: 2px;
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex: 1 300px;
+  flex: 3 300px;
   max-width: 90%;
   padding: 1rem;
   color: #fff;
