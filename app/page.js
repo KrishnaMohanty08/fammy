@@ -29,8 +29,9 @@ const tagLine = [
   "Sharing stories, growing together.",
   "The heart of your family moments.",
   "Connecting generations, one post at a time.",
-  "Your family's digital table"
+  "Your family&apos;s digital table"
 ];
+
 
 const testimonials = [
   { name: "Grandma Lily", text: "Fammy helped me see my grandkids grow up, even from afar!" },
