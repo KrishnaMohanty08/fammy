@@ -25,11 +25,11 @@ const roboto = Roboto({
 });
 
 const tagLine = [
-  "Where every family finds home.",
-  "Sharing stories, growing together.",
-  "The heart of your family moments.",
-  "Connecting generations, one post at a time.",
-  "Your family&apos;s digital table"
+  `Where every family finds home.`,
+  `Sharing stories, growing together.`,
+  `The heart of your family moments.`,
+  `Connecting generations, one post at a time.`,
+  `Your family&apos;s digital table`
 ];
 
 
