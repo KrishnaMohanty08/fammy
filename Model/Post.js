@@ -10,7 +10,7 @@ const postSchema=new mongoose.Schema({
         dislikes: {type:Number},
       },
       views: Number,
-      userId: Number,
+      username: String,
 });
 const Post =mongoose.models.Post || mongoose.model("Post", postSchema,"posts");
 
