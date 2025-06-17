@@ -1,16 +1,15 @@
 import  mongoose  from "mongoose";
 
 const postSchema=new mongoose.Schema({
-      id:Number ,
+      username: {type:String,ref:'User',required:true},
       title:String,
       body: String,
       tags: [ String ],
       reactions: {
-        likes: {type:Number},
-        dislikes: {type:Number},
+        likes: {type:Number,default:0},
+        dislikes: {type:Number,default:0},
       },
-      views: Number,
-      username: String,
+      views: {type:Number,default:0},
 });
 const Post =mongoose.models.Post || mongoose.model("Post", postSchema,"posts");
 

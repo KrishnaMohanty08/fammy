@@ -128,9 +128,6 @@ export default function Page() {
               <button onClick={() => signIn("github",{callbackUrl:`${window.location.origin}/feed`})} className='flex gap-1 cursor-pointer bg-white p-3 my-2 rounded-xl'>
                 <img src='./images/github.png' className='w-4' /> Github
               </button>
-              <button onClick={() => signIn("google")} className='flex gap-1 cursor-pointer bg-white p-3 my-2 rounded-xl'>
-                <img src='./images/google.png' className='w-4' /> Google
-              </button>
             </>
           )}
         </div>
