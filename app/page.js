@@ -99,7 +99,7 @@ export default function Home() {
         >
           {testimonials.map((t, i) => (
             <div key={i} className="bg-white/80 rounded-xl shadow p-6 m-4 text-black text-center">
-              <p className="italic">"{t.text}"</p>
+              <p className="italic">&quot;{t.text}&quot;</p>
               <span className="font-bold block mt-2">{t.name}</span>
             </div>
           ))}
