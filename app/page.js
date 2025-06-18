@@ -34,7 +34,7 @@ const tagLine = [
 
 
 const testimonials = [
-  { name: 'Grandma Lily', text: 'Fammy helped me see my grandkids grow up, even from afar! ' },
+  { name: 'Grandma Lily', text: 'Fammy helped me see my grandkids grow up, even from afar ' },
   { name: 'Uncle Joe', text: 'Our family reunions are better organized than ever.' },
   { name: 'Aunt Maya', text: 'I love sharing photos with everyone in one safe place.' }
 ];
