@@ -1,3 +1,4 @@
+// app/page.jsx
 "use client";
 import "../../globals.css";
 import Navbar from "../../../components/navbar";
@@ -7,19 +8,13 @@ import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import { Avatar } from "@mui/material";
 import SelectedListItem from "@/components/SelectedListItem";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import AddPost from "@/components/AddPost";
-import { useForm } from "react-hook-form";
+import Profile from "@/components/Profile";
 
-const comic = Comic_Neue({
-  weight: "400",
-  subsets: ["latin"],
-});
-const roboto = Roboto({
-  weight: "400",
-  subsets: ["latin"],
-});
+const comic = Comic_Neue({ weight: "400", subsets: ["latin"] });
+const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -27,13 +22,12 @@ export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const fetchData = async () => {
     try {
-      let req = await fetch("/api/posts");
-      let data = await req.json();
-      setPosts(data.posts);
+      const req = await fetch("/api/posts");
+      const data = await req.json();
+      setPosts(data.posts || []);
     } catch (error) {
       console.log("Error fetching data:", error);
     } finally {
@@ -51,9 +45,7 @@ export default function Home() {
 
   const updateLikes = async (postId) => {
     try {
-      const res = await fetch(`/api/posts/${postId}/like`, {
-        method: "POST",
-      });
+      const res = await fetch(`/api/posts/${postId}/like`, { method: "POST" });
       const data = await res.json();
       console.log('Updated Post:', data);
       fetchData();
@@ -64,30 +56,16 @@ export default function Home() {
 
   const updateDislikes = async (postId) => {
     try {
-      let res = await fetch(`/api/posts/${postId}/dislikes`, {
-        method: "POST",
-      });
-      if (res) {
+      const res = await fetch(`/api/posts/${postId}/dislikes`, { method: "POST" });
+      if (res.ok) {
         const data = await res.json();
-        console.log("updated data:", data);
+        console.log("Updated data:", data);
         fetchData();
       } else {
-        console.log("not decremented");
+        console.log("Not decremented");
       }
     } catch (error) {
       console.log("ERROR:", error);
-    }
-  };
-
-  const onSubmit = async (data) => {
-    try {
-        const addSearchParams=(url,params={})=>{
-          new URL(
-            `${url.origin} ${url.pathname}`
-          )
-        }
-    } catch (error) {
-      console.log(error, "Error sorting cards");
     }
   };
 
@@ -96,30 +74,9 @@ export default function Home() {
       <div className="absolute inset-0 -z-10 h-full w-full bg-gradient-to-br from-pink-800 to-indigo-900"></div>
       <Navbar />
       <SelectedListItem selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
-      <div className="flex justify-center mt-15 mx-4 sm:mx-40">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex items-center px-4 w-full max-w-lg bg-gray-800 bg-opacity-70 backdrop-blur-lg rounded-full p-1 shadow-lg"
-        >
-          <input
-            type="search"
-            {...register("search")}
-            className="flex-1 bg-transparent text-white text-sm p-2 outline-none placeholder-gray-400"
-            placeholder="Search stories that interest you..."
-          />
-          <button type="submit" className="p-2 hover:bg-gray-700 rounded-full transition-colors">
-            <lord-icon
-              src="https://cdn.lordicon.com/swqyihda.json"
-              trigger="hover"
-              colors="primary:#ffffff,secondary:#e8308c"
-              style={{ width: "24px", height: "24px" }}
-            ></lord-icon>
-          </button>
-        </form>
-      </div>
-      <AddPost />
+      {/* Pass session */}
       {loading ? (
-        <div className="flex items-center justify-center h-[calc(100vh-232px)] mx-4 sm:ml-40 mt-6  ">
+        <div className="flex items-center justify-center h-[calc(100vh-232px)] mx-4 sm:ml-40 mt-6">
           <lord-icon
             src="https://cdn.lordicon.com/ydhnbgpj.json"
             trigger="loop"
@@ -129,7 +86,28 @@ export default function Home() {
       ) : (
         <>
           {selectedIndex === 0 ? (
-            <div className="flex-1 overflow-y-auto max-h-[calc(100vh-232px)] mx-4 sm:ml-40 mt-6">
+            <>
+            <div className="flex-1 overflow-y-auto max-h-screen mx-4 sm:ml-40 mt-6">
+            <div className="flex  justify-center mt-15 mx-4 sm:mx-40">
+                <form className="flex items-center px-4 w-full max-w-lg bg-gray-800 bg-opacity-70 backdrop-blur-lg rounded-full p-1 shadow-lg">
+                  <input
+                    type="search"
+                    className="flex-1 bg-transparent text-white text-sm p-2 outline-none placeholder-gray-400"
+                    placeholder="Search stories that interest you..."
+                  />
+                  <button type="submit" className="p-2 hover:bg-gray-700 rounded-full transition-colors">
+                    <lord-icon
+                      src="https://cdn.lordicon.com/swqyihda.json"
+                      trigger="hover"
+                      colors="primary:#ffffff,secondary:#e8308c"
+                      style={{ width: "24px", height: "24px" }}
+                    ></lord-icon>
+                  </button>
+                </form>
+              </div>
+              <div children='flex justify-center sticky fixed top-15'>
+              <AddPost fetchData={fetchData} session={session} />
+              </div>
               <div className="flex flex-wrap gap-6 justify-center">
                 {posts.map((post) => (
                   <div
@@ -138,31 +116,22 @@ export default function Home() {
                   >
                     <div className="text-left text-white">
                       <div className="flex items-center gap-4">
-                      <Avatar
-                        alt="Emy Sharp"
-                        src={`./images/p4.jpg`}
-                        className="w-12 h-12 border-2 border-white mb-4 inline"
-                      />
-                      <h2>{post.username}</h2>
+                        <Avatar
+                          alt="Emy Sharp"
+                          src={`./images/p4.jpg`}
+                          className="w-12 h-12 border-2 border-white mb-4 inline"
+                        />
+                        <h2>{post.userId?.username || 'Anonymous'}</h2>
                       </div>
                       <h3 className="text-2xl font-bold mb-3 text-gray-100">{post.title}</h3>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {post.tags.map((tag, index) => (
-                          <Chip
-                            key={index}
-                            label={tag}
-                            variant="outlined"
-                            sx={{color:"white"}}
-                          />
+                          <Chip key={index} label={tag} variant="outlined" sx={{ color: "white" }} />
                         ))}
                       </div>
                       <div>
-                        <span className="mb-2 text-green-400 mr-6">
-                          Likes: {post.reactions.likes}
-                        </span>
-                        <span className="mb-2 text-red-400">
-                          Dislikes: {post.reactions.dislikes}
-                        </span>
+                        <span className="mb-2 text-green-400 mr-6">Likes: {post.reactions.likes}</span>
+                        <span className="mb-2 text-red-400">Dislikes: {post.reactions.dislikes}</span>
                         <p className={`mb-4 text-gray-200 ${comic.className} p-3 rounded-lg bg-gray-700 bg-opacity-50`}>
                           {post.body}
                         </p>
@@ -188,8 +157,11 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            </>
           ) : selectedIndex === 1 ? (
             <div className="text-white text-center text-xl mt-10">DMs coming soon!</div>
+          ) : selectedIndex === 2 ? (
+            <Profile />
           ) : null}
         </>
       )}

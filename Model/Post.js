@@ -14,6 +14,6 @@ const postSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const Post = mongoose.models.Post || mongoose.model('Post', postSchema, 'posts');
+const Post = mongoose.models.Post || mongoose.model('Post', postSchema, 'posts_new');
 
 export default Post;

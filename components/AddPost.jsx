@@ -1,4 +1,4 @@
-import { fetchData } from 'next-auth/client/_utils';
+// components/AddPost.jsx
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Accordion from '@mui/material/Accordion';
@@ -6,34 +6,42 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const AddPost = () => {
+const AddPost = ({ fetchData, session }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const [submitted, setSubmitted] = useState();
-  const [post, setPost] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const tags = ['love', 'english', 'advice', 'french', 'american'];
 
   const setDefault = () => {
     reset({
-      "title": "",
-      "discription": "",
-      "tags": ""
+      title: '',
+      description: '',
+      tags: '',
     });
   };
 
   const onSubmit = async (data) => {
-    console.log("Submitting data:", data);
+    console.log('Submitting data:', data);
+    if (!session?.user?.id) {
+      console.log('No session user ID');
+      return;
+    }
     try {
       const res = await fetch('/api/posts', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: session.user.id, // Use session userId
+          title: data.title,
+          body: data.description,
+          tags: data.tags,
+        }),
       });
       const result = await res.json();
       console.log(result);
       setSubmitted(true);
     } catch (error) {
-      console.log("ERROR creating new post", error);
+      console.log('ERROR creating new post', error);
     }
   };
 
@@ -46,8 +54,8 @@ const AddPost = () => {
   }, [submitted]);
 
   return (
-    <div className="ml-40 m-4 text-xl">
-      <Accordion className="bg-gray-800 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
+    <div className=" m-4 text-xl">
+      <Accordion className="bg-gray-800  bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon className="text-white" />}
           aria-controls="add-post-content"
@@ -63,7 +71,7 @@ const AddPost = () => {
                 <label className="text-md text-gray-200">Title</label>
                 <input
                   type="text"
-                  {...register("title", { required: true, minLength: { value: 4, message: "Minimum 4 characters" } })}
+                  {...register('title', { required: true, minLength: { value: 4, message: 'Minimum 4 characters' } })}
                   className="w-full mt-1 p-2 text-sm border border-gray-600 rounded-lg bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Give your story a title"
                 />
@@ -72,24 +80,22 @@ const AddPost = () => {
               <div className="mb-4">
                 <label className="text-md text-gray-200">Description</label>
                 <textarea
-                  {...register("discription", { required: true, minLength: { value: 10, message: "Minimum 10 characters" } })}
+                  {...register('description', { required: true, minLength: { value: 10, message: 'Minimum 10 characters' } })}
                   className="w-full mt-1 p-2 text-sm border border-gray-600 rounded-lg bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Your story..."
                   rows="4"
                 />
-                {errors.discription && <p className="text-xs text-red-400 mt-1">{errors.discription.message}</p>}
+                {errors.description && <p className="text-xs text-red-400 mt-1">{errors.description.message}</p>}
               </div>
               <div className="mb-4">
                 <label className="text-md text-gray-200">Tags</label>
                 <select
-                  {...register("tags", { required: true })}
+                  {...register('tags', { required: true })}
                   className="w-full mt-1 p-2 text-sm border border-gray-600 rounded-lg bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="" className="text-gray-400">Select some relevant tags</option>
                   {tags.map((tag, idx) => (
-                    <option key={idx} value={tag} className="text-white">
-                      {tag}
-                    </option>
+                    <option key={idx} value={tag} className="text-white">{tag}</option>
                   ))}
                 </select>
               </div>

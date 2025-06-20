@@ -112,16 +112,16 @@ export default function Home() {
           <div data-aos="fade-right" className="duration-300 flex p-1 m-2 border-b border-r border-black rounded-xl shadow-lg ">
             <Image src='/images/p1.png' width={400} height={300} alt="family photo" className="transform transition duration-100 cursor-pointer hover:scale-105 rounded-xl" />
           </div>
-          <div data-aos="flip-left" className="flex-1 flex-row border rounded-xl text-white bg-blur-md shadow-lg p-2 bg-purple-800/80">
+          <div data-aos="flip-left" className="flex-1 flex-row border rounded-xl text-white bg-blur-md shadow-lg p-2 bg-black/80">
             <h4 className={`${comic.className} px-2`}>A private social platform for families to stay connected, share memories, and organize events.</h4>
             <h3 className={`${roboto.className} text-yellow-500 text-3xl px-2 mt-2`}>Why?</h3>
             <h4 className={`${comic.className} px-2`}>Families often struggle to stay in touch across generations or distances. Fammy.com can be a safe, private space for family members to communicate and preserve memories.</h4>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row text-black gap-4">
+        <div className="flex flex-col md:flex-row text-gray-200 gap-4">
           {/* Features List */}
-          <div data-aos="flip-right" className="flex flex-col border rounded-xl bg-white/80 shadow-lg backdrop-blur-md p-4 min-w-[320px]">
+          <div data-aos="flip-right" className="flex flex-col border rounded-xl bg-black/80 shadow-lg backdrop-blur-md p-4 min-w-[320px]">
             <h2 className="justify-center mb-2 text-2xl">Features</h2>
             <ol className="list-decimal ml-6 space-y-4">
               <li className="flex items-center gap-2">

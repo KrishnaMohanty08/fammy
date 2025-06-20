@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Comic_Neue } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import Navbar from '@/components/navbar';
+import { Divider } from '@mui/material';
 
-const comic = Comic_Neue({ weight: '400', subsets: ['latin'] });
+const comic = Roboto({ weight: '400', subsets: ['latin'] });
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -20,6 +21,7 @@ export default function Profile() {
       setFormData({
         username: session.user.username || session.user.name || '',
         bio: session.user.bio || '',
+        email:session.user.email,
       });
     }
   }, [status, session, router]);
@@ -39,10 +41,12 @@ export default function Profile() {
           userId: session.user.id,
           username: formData.username,
           bio: formData.bio,
+
         }),
       });
       session.user.username = formData.username;
       session.user.bio = formData.bio;
+      session.user.email=formData.email;
       alert('Profile updated!');
     } catch (error) {
       alert('Error updating profile');
@@ -50,29 +54,31 @@ export default function Profile() {
   };
 
   if (status === 'loading') {
-    return <div className="min-h-screen flex justify-center items-center"><div className="w-12 h-12 border-4 border-t-yellow-500 border-gray-200 rounded-full animate-spin"></div></div>;
+    return <div className="flex items-center justify-center h-[calc(100vh-232px)] mx-4 sm:ml-40 mt-6">
+          <lord-icon
+            src="https://cdn.lordicon.com/ydhnbgpj.json"
+            trigger="loop"
+            style={{ width: "150px", height: "150px" }}
+          ></lord-icon>
+        </div>;
   }
 
   if (!session) return null;
 
   return (
-    <div className="relative min-h-screen bg-gray-100">
-      <div className="fixed inset-0 w-full h-full overflow-hidden z-0">
-        <img
-          src="/images/p2.png"
-          alt="Background"
-          className="w-full h-full object-cover blur-md transform transition duration-300 hover:scale-110"
-        />
-      </div>
+      <div className="relative min-h-screen ">
+        <div className="absolute inset-0 -z-10 h-full w-full bg-gradient-to-br from-pink-800 to-indigo-900"></div>
       <div className="relative z-10 min-h-screen flex flex-col">
         <Navbar />
-        <div className="container mx-auto px-4 py-8">
-          <div className={`${comic.className} bg-white/90 backdrop-blur-lg rounded-xl p-8 max-w-md mx-auto shadow-2xl`}>
-            <h1 className="text-2xl font-bold text-center mb-4">{formData.username}</h1>
-            <p className="text-gray-600 text-center mb-6">{formData.bio || 'No bio yet'}</p>
+        <div className="container mx-auto mt-4 px-4 py-8">
+          <div className={`${comic.className} bg-black/90 backdrop-blur-lg rounded-xl p-6 max-w-md mx-auto shadow-2xl`}>
+            <h1 className="text-2xl font-bold text-white text-center mb-4">Welcome,{formData.username}</h1>
+            <h3 className={`${comic.className} text-center text-white font-semibold `}>{session.user.email}</h3>
+            <p className="text-white text-center mb-3">{formData.bio}</p>
+            <Divider/>
             <form onSubmit={handleSubmit}>
-              <div className="mb-6">
-                <label htmlFor="username" className="block mb-2 text-lg font-semibold text-gray-800">
+              <div className="mb-6 text-white">
+                <label htmlFor="username" className="block mb-2 text-lg font-semibold ">
                   Username
                 </label>
                 <input
@@ -81,13 +87,12 @@ export default function Profile() {
                   name="username"
                   value={formData.username}
                   onChange={handleInputChange}
-                  placeholder="Enter username"
-                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="w-full p-2 rounded-lg border border-black focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   required
                 />
               </div>
-              <div className="mb-6">
-                <label htmlFor="bio" className="block mb-2 text-lg font-semibold text-gray-800">
+              <div className="mb-6 text-white">
+                <label htmlFor="bio" className="block mb-2 text-lg font-semibold text-white">
                   Bio
                 </label>
                 <textarea
@@ -96,7 +101,7 @@ export default function Profile() {
                   value={formData.bio}
                   onChange={handleInputChange}
                   placeholder="Tell us about yourself"
-                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   rows="4"
                 />
               </div>
