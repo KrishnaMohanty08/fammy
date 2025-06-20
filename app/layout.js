@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "../components/SessionWrapper";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,7 +25,7 @@ export default  function RootLayout({ children }) {
       <SessionWrapper>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
-        
+        <Analytics />
         <Script src="https://cdn.lordicon.com/lordicon.js" strategy="beforeInteractive"/>
       </body> 
       </SessionWrapper>
