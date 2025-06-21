@@ -35,7 +35,7 @@ export default function Page() {
         />
       </div>
 
-      <div className="relative z-10 min-h-screen flex flex-col">
+      <div className="relative z-10 mt-15 min-h-screen flex flex-col">
         <Navbar />
 
         {/* <form onSubmit={handleSubmit(onSubmit)} className={` mt-22 backdrop-blur-lg rounded-xl max-w-md mx-auto mt-10 border  shadow-4xl w-90`}>
@@ -106,8 +106,8 @@ export default function Page() {
 
           </div>
         </form>
-        <hr className='border border-b-t m-7'></hr> */}
         <p className=' flex text-md text-gray-200 hover:underline justify-center items-align'>Don't have an account ? Signup</p>
+        <hr className='border border-b-t m-7'></hr> */}
 
         <div className='flex justify-center items-align flex-row gap-6 text-black'>
           {session ? (
