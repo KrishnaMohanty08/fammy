@@ -10,7 +10,7 @@ export default function SelectedListItem({ selectedIndex, setSelectedIndex }) {
   };
 
   return (
-    <div className='absolute fixed left-0 top-11 -z-2 h-screen bg-black z-40 text-white p-2'>
+    <div className='absolute fixed left-0 top-12 -z-5 h-screen bg-black z-40 text-white p-2'>
       <Box sx={{ width: '100%', maxWidth: 350, bgcolor: 'background.gray-300' }}>
         <List component="nav" aria-label="main mailbox folders" >
           <ListItemButton selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}>
