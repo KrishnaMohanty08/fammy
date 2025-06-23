@@ -2,7 +2,7 @@
 "use client";
 import "../../globals.css";
 import Navbar from "../../../components/navbar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,Suspense } from "react";
 import { Roboto, Comic_Neue } from "next/font/google";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -108,7 +108,7 @@ export default function Home() {
           {selectedIndex === 0 ? (
             <>
             <div className="flex-1 overflow-y-auto max-h-screen mx-4 sm:ml-40 mt-6">
-            <div className="flex  justify-center bg-slate-700 rounded mt-15 mx-4 sm:mx-40">
+            {<Suspense fallback={<div className="flex  justify-center bg-slate-700 rounded mt-15 mx-4 sm:mx-40">
                   <input
                     type="text"
                     className="flex-1 bg-transparent text-white text-sm p-2 outline-none placeholder-gray-400"
@@ -116,7 +116,7 @@ export default function Home() {
                     onChange={handleSearch}
                     value={query}
                   />
-              </div>
+              </div>}></Suspense>}
               <div children='flex justify-center sticky fixed top-15'>
               <AddPost fetchData={fetchData} session={session} />
               </div>
