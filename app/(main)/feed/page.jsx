@@ -72,11 +72,12 @@ export default function Home() {
   const searchParams=useSearchParams();
   const query=searchParams.get('search');
 
-  const filteredPost=posts.filter((post)=>{
-    post.title.toLowerCase().includes(query.toLowerCase()) ||
-    post.body.toLowerCase().includes(query.toLowerCase()) ||  
-    post.tags.some((tag)=>tag.toLowerCase().includes(query.toLowerCase())) 
-  });
+  const filteredPost = posts.filter((post) =>
+  post.title.toLowerCase().includes(query?.toLowerCase() || "") ||
+  post.body.toLowerCase().includes(query?.toLowerCase() || "") ||
+  post.tags.some((tag) => tag.toLowerCase().includes(query?.toLowerCase() || ""))
+);
+
 
   const handleSearch=(e)=>{
     try{
@@ -86,6 +87,7 @@ export default function Home() {
       alert("unable to search the query");
     }
   }
+  const stories=filteredPost.length>0?filteredPost:posts;
 
   return (
     <>
@@ -106,7 +108,7 @@ export default function Home() {
           {selectedIndex === 0 ? (
             <>
             <div className="flex-1 overflow-y-auto max-h-screen mx-4 sm:ml-40 mt-6">
-            <div className="flex  justify-center mt-15 mx-4 sm:mx-40">
+            <div className="flex  justify-center bg-slate-700 rounded mt-15 mx-4 sm:mx-40">
                   <input
                     type="text"
                     className="flex-1 bg-transparent text-white text-sm p-2 outline-none placeholder-gray-400"
@@ -119,7 +121,7 @@ export default function Home() {
               <AddPost fetchData={fetchData} session={session} />
               </div>
               <div className="flex flex-wrap gap-6 justify-center">
-                {filteredPost.map((post) => (
+                {stories.map((post) => (
                   <div
                     key={post._id}
                     className="bg-gray-800 bg-opacity-70 backdrop-blur-lg rounded-xl p-6 w-full max-w-md transition-transform duration-300 hover:shadow-black hover:shadow-2xl shadow-lg"
