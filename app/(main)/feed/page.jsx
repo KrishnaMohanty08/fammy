@@ -9,7 +9,7 @@ import Chip from "@mui/material/Chip";
 import { Avatar } from "@mui/material";
 import SelectedListItem from "@/components/SelectedListItem";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter,useSearchParams } from "next/navigation";
 import AddPost from "@/components/AddPost";
 import Profile from "@/components/Profile";
 
@@ -21,7 +21,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -69,6 +69,24 @@ export default function Home() {
     }
   };
 
+  const searchParams=useSearchParams();
+  const query=searchParams.get('search');
+
+  const filteredPost=posts.filter((post)=>{
+    post.title.toLowerCase().includes(query.toLowerCase()) ||
+    post.body.toLowerCase().includes(query.toLowerCase()) ||  
+    post.tags.some((tag)=>tag.toLowerCase().includes(query.toLowerCase())) 
+  });
+
+  const handleSearch=(e)=>{
+    try{
+      const value=e.target.value;
+      router.push(`?search=${encodeURIComponent(value)}`)
+    }catch(error){
+      alert("unable to search the query");
+    }
+  }
+
   return (
     <>
       <div className="absolute inset-0 -z-10 h-full w-full bg-gradient-to-br from-pink-800 to-indigo-900"></div>
@@ -89,27 +107,19 @@ export default function Home() {
             <>
             <div className="flex-1 overflow-y-auto max-h-screen mx-4 sm:ml-40 mt-6">
             <div className="flex  justify-center mt-15 mx-4 sm:mx-40">
-                <form className="flex items-center px-4 w-full max-w-lg bg-gray-800 bg-opacity-70 backdrop-blur-lg rounded-full p-1 shadow-lg">
                   <input
-                    type="search"
+                    type="text"
                     className="flex-1 bg-transparent text-white text-sm p-2 outline-none placeholder-gray-400"
                     placeholder="Search stories that interest you..."
+                    onChange={handleSearch}
+                    value={query}
                   />
-                  <button type="submit" className="p-2 hover:bg-gray-700 rounded-full transition-colors">
-                    <lord-icon
-                      src="https://cdn.lordicon.com/swqyihda.json"
-                      trigger="hover"
-                      colors="primary:#ffffff,secondary:#e8308c"
-                      style={{ width: "24px", height: "24px" }}
-                    ></lord-icon>
-                  </button>
-                </form>
               </div>
               <div children='flex justify-center sticky fixed top-15'>
               <AddPost fetchData={fetchData} session={session} />
               </div>
               <div className="flex flex-wrap gap-6 justify-center">
-                {posts.map((post) => (
+                {filteredPost.map((post) => (
                   <div
                     key={post._id}
                     className="bg-gray-800 bg-opacity-70 backdrop-blur-lg rounded-xl p-6 w-full max-w-md transition-transform duration-300 hover:shadow-black hover:shadow-2xl shadow-lg"
