@@ -71,7 +71,7 @@ export default function Home() {
       <Navbar />
       <SelectedListItem selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
       {loading ? (
-        <div className="flex items-center justify-center h-[calc(100vh-232px)] mx-4 sm:ml-40 mt-6">
+        <div className="flex items-center justify-center h-[calc(100vh-20px)] mx-4 sm:ml-40 mt-6">
           <lord-icon
             src="https://cdn.lordicon.com/ydhnbgpj.json"
             trigger="loop"
@@ -86,9 +86,7 @@ export default function Home() {
             </div>}>
               <FeedDisplay posts={posts} session={session} fetchData={fetchData} updateLikes={updateLikes} updateDislikes={updateDislikes} />
             </Suspense>
-          ) : selectedIndex === 1 ? (
-            <div className="text-white text-center text-xl mt-10">DMs coming soon!</div>
-          ) : selectedIndex === 2 ? (
+          )  : selectedIndex === 1 ? (
             <Profile />
           ) : null}
         </>

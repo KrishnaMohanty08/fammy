@@ -13,7 +13,15 @@ const geist = Geist({ weight: '400', subsets: ['latin'] });
 export default function Page() {
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = async(data) =>{
+    console.log(data);
+    // try{
+    //   const res=await fetch('app/api/',method:'POST');
+
+    // }catch(error){
+    //   console.log("error loging in: ",error)
+    // }
+  } 
 
   const { data: session } = useSession()
   console.log(session)
@@ -65,14 +73,14 @@ export default function Page() {
             </div>
 
             <div className="mb-2 flex flex-row items-center gap-2">
-              <label htmlFor="dob" className=" text-md font-semibold text-gray-800">
-                Date of Birth:
+              <label htmlFor="email" className=" text-md font-semibold text-gray-800">
+                Email:
               </label>
               <input
-                {...register("dob", { required: true })}
+                {...register("email", { required: true })}
                 type="date"
-                id="dob"
-                name="dob"
+                id="email"
+                name="email"
                 className={`${comic.className} w-full p-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500`}
 
               />
@@ -95,10 +103,18 @@ export default function Page() {
               <a href="https://www.flaticon.com/free-icons/password" title="password icons"></a>
               {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
             </div>
+
+            <div className='mb-2 flex flex-row items-center gap-2'>
+              <label className="text-md font-semibold text-gray-800">Room Code :</label>
+              <input {...register("roomcode",true,)} type='number' name='roomcode'  placeholder='make room code unique'
+              className='w-full p-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500'/>
+            </div>
+            
             <Country />
             <div className={`flex justify-center px-2 flex-col ${comic.className}`}>
 
-              <button disabled={isSubmitting} className={`${geist.className} bg-red-500 p-2  hover:bg-black hover:border-t cursor-pointer hover:shadow-lg hover:border-y-lg transition-transform duration-300 justify-center rounded-3xl my-2`}>
+              <button disabled={isSubmitting} 
+              className={`${geist.className} bg-red-500 p-2  hover:bg-black hover:border-t cursor-pointer hover:shadow-lg hover:border-y-lg transition-transform duration-300 justify-center rounded-3xl my-2`}>
                 Submit
               </button>
 
@@ -107,7 +123,7 @@ export default function Page() {
           </div>
         </form>
         <p className=' flex text-md text-gray-200 hover:underline justify-center items-align'>Don't have an account ? Signup</p>
-        <hr className='border border-b-t m-7'></hr> */}
+        <hr className='border border-b-t m-7'></hr>  */}
 
         <div className='flex justify-center items-align flex-row gap-6 text-black'>
           {session ? (
